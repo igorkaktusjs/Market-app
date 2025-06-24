@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, ScrollView, Button } from 'react-native';
 import ChartScreenHeader from '../components/ChartScreenHeader/ChartScreenHeader';
 import DisplayOptions from '../components/DisplayOptions/DisplayOptions';
-
+import MarketChart from '../components/MarketChart/MarketChart'
 
 
 const ChartScreen = () => {
@@ -15,6 +15,7 @@ const ChartScreen = () => {
         <ChartScreenHeader />
 
         <View style={styles.section}>
+            <MarketChart/>
         </View>
 
         <View style={styles.section}>
@@ -38,6 +39,6 @@ const styles = StyleSheet.create({
       paddingBottom: 32,
     },
     section: {
-      marginBottom: 24,
+        
     },
   });

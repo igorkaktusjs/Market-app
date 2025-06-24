@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
-import { toggleLine, setZoom } from "../../store/displaySlice"; 
+import { toggleLine, resetDisplay } from "../../store/displaySlice"; 
 import { styles } from "./styles";
 import DisplayCheckbox from "./DisplayCheckbox";
 import ResetZoomButton from "./ResetZoomButton";
@@ -10,6 +10,8 @@ import ResetZoomButton from "./ResetZoomButton";
 const DisplayOptions: React.FC = () => {
   const display = useSelector((state: RootState) => state.display);
   const dispatch = useDispatch();
+
+  const chartMode = display.chartMode;
   const [showWarning, setShowWarning] = useState(false);
 
   const handleToggle = (key: keyof typeof display) => {
@@ -42,12 +44,13 @@ const DisplayOptions: React.FC = () => {
         </View>
 
         <View style={styles.buttonColumn}>
-          <ResetZoomButton
-            title="Reset Zoom"
-            onPress={() => {
-              dispatch(setZoom(false)); 
-            }}
-          />
+        <ResetZoomButton
+          title="Reset Zoom"
+          disabled={chartMode === 'weekly'} 
+          onPress={() => {
+          dispatch(resetDisplay()); 
+  }}
+/>
         </View>
         
         {showWarning && (

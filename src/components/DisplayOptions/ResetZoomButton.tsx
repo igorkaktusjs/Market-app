@@ -1,37 +1,26 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, ViewStyle } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { setZoom } from '../../store/displaySlice'; 
-import { RootState } from '../../store'; 
 
-interface ZoomButtonProps { 
+interface ResetZoomButtonProps { 
   style?: ViewStyle;
   title: string;
   onPress: () => void;
+  disabled?: boolean;
 }
 
-const ResetZoomButton: React.FC<ZoomButtonProps> = ({title, style }) => {
-  const dispatch = useDispatch();
-  const zoomed = useSelector((state: RootState) => state.display.zoomed); 
-
-  const handleZoomIn = () => {
-    if (zoomed) {
-      dispatch(setZoom(true)); 
-    }
-  };
-
+const ResetZoomButton: React.FC<ResetZoomButtonProps> = ({ title, style, onPress, disabled = false }) => {
   return (
     <TouchableOpacity
-      onPress={handleZoomIn}
+      onPress={onPress}
       style={[
         styles.button,
         style,
-        zoomed && styles.buttonDisabled 
+        disabled && styles.buttonDisabled
       ]}
       activeOpacity={0.8}
-      disabled={!zoomed} 
+      disabled={disabled}
     >
-      <Text style={[styles.text, zoomed && styles.textDisabled]}>
+      <Text style={[styles.text, disabled && styles.textDisabled]}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -45,13 +34,14 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 18,
-    backgroundColor: '#9095A1', 
+     
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 2,
+    backgroundColor: '#171A1F',
   },
   buttonDisabled: {
-    backgroundColor: '#171A1F',
+    backgroundColor: '#9095A1',
   },
   text: {
     color: '#fff',
@@ -59,6 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   textDisabled: {
-    color: '#fff', 
+    color: '#fff',
+    opacity: 0.5, 
   },
 });

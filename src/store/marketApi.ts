@@ -24,6 +24,7 @@ export const marketApi = createApi({
       transformResponse: (response: MarketDataResponse) => 
         response.data
           .filter(item => !isNaN(Number(item.timestamp))) 
+          .slice(-90)
           .map(item => ({
             ...item,
             timestamp: formatDate(Number(item.timestamp) * 1000) 
