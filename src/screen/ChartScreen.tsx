@@ -1,14 +1,43 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { StyleSheet, View, ScrollView, Button } from 'react-native';
+import ChartScreenHeader from '../components/ChartScreenHeader/ChartScreenHeader';
+import DisplayOptions from '../components/DisplayOptions/DisplayOptions';
+
+
 
 const ChartScreen = () => {
   return (
-    <View>
-      <Text>ChartScreen</Text>
+    <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <ChartScreenHeader />
+
+        <View style={styles.section}>
+        </View>
+
+        <View style={styles.section}>
+          <DisplayOptions />
+        </View>
+
+      </ScrollView>
     </View>
-  )
-}
+  );
+};
 
-export default ChartScreen
+export default ChartScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#F9F9F9',
+    },
+    scrollContent: {
+      padding: 16,
+      paddingBottom: 32,
+    },
+    section: {
+      marginBottom: 24,
+    },
+  });
