@@ -8,28 +8,24 @@ function getWeekNumber(date) {
   return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 }
 
-// Единая функция для нормализации timestamp
+
 function normalizeTimestamp(timestamp) {
   if (typeof timestamp === 'number') {
-    // Если число больше 1000000000000, то это миллисекунды - конвертируем в секунды
     return timestamp > 1000000000000 ? Math.floor(timestamp / 1000) : timestamp;
   }
   
   if (typeof timestamp === 'string') {
-    // Если это строка с числом (Unix timestamp)
     if (/^\d+$/.test(timestamp)) {
       const num = parseInt(timestamp, 10);
       return num > 1000000000000 ? Math.floor(num / 1000) : num;
     }
     
-    // Если это дата в формате DD/MM/YYYY
     if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(timestamp)) {
       const [day, month, year] = timestamp.split('/');
       const date = new Date(year, month - 1, day);
       return Math.floor(date.getTime() / 1000);
     }
     
-    // Попытка парсинга как обычной даты
     const date = new Date(timestamp);
     if (!isNaN(date.getTime())) {
       return Math.floor(date.getTime() / 1000);
@@ -39,7 +35,6 @@ function normalizeTimestamp(timestamp) {
   return null;
 }
 
-// Функция для агрегации недельных данных
 function aggregateWeek(weekData) {
   if (!weekData || weekData.length === 0) return null;
   
@@ -61,7 +56,6 @@ export function aggregateToWeekly(data) {
     return [];
   }
 
-  // Сначала нормализуем все timestamp'ы
   const normalizedData = data.map(item => {
     const normalizedTimestamp = normalizeTimestamp(item.timestamp);
     if (normalizedTimestamp === null) {
@@ -78,7 +72,7 @@ export function aggregateToWeekly(data) {
     return [];
   }
 
-  // Сортируем по timestamp
+
   normalizedData.sort((a, b) => a.timestamp - b.timestamp);
 
   const result = [];
@@ -101,7 +95,6 @@ export function aggregateToWeekly(data) {
     lastWeekNumber = weekNumber;
   }
 
-  // Обрабатываем последнюю неделю
   if (week.length > 0) {
     const aggregated = aggregateWeek(week);
     if (aggregated) {
@@ -168,7 +161,6 @@ export function getVisibleDataRange(
     return { minY: 0, maxY: 100 };
   }
 
-  // Добавляем небольшой отступ для лучшего отображения
   const paddingY = (maxY - minY) * 0.1;
   const result = {
     minY: minY - paddingY,
